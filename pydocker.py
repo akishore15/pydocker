@@ -5,10 +5,7 @@ import subprocess
 
 
 def run_command(cmd, capture_output=False, check=True, env=None):
-    """Run a shell command and handle errors. Accepts list or string commands.
 
-    Returns subprocess.CompletedProcess on success and exits on failure.
-    """
     printable = cmd if isinstance(cmd, str) else " ".join(map(str, cmd))
     print(f"Running: {printable}")
     try:
@@ -31,131 +28,121 @@ def run_command(cmd, capture_output=False, check=True, env=None):
 
 
 if shutil.which("docker") is None:
-    print("Docker is not installed or not in PATH.")
-    sys.exit(1)
+    run_command("curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh")
+
 
 
 class Docker:
-    def __init__(self, docker_path="docker", env=None):
-        self.docker_path = docker_path
-        self.env = env
 
-    def _run(self, args, capture_output=False):
-        cmd = [self.docker_path] + list(map(str, args))
-        return run_command(cmd, capture_output=capture_output, env=self.env)
+    def run(self, image):
+        run_command(f"docker run -it {image} /bin/bash")
 
-    def command(self, *args):
-        return self._run(list(args))
-
-    def run(self, *args):
-        return self._run(["run"] + list(args))
+    def pull(self, image, tag):
+        run_command(f"docker pull {image}:{tag}")
 
     def build(self, *args):
-        return self._run(["build"] + list(args))
-
-    def pull(self, *args):
-        return self._run(["pull"] + list(args))
+        return run_command(f"docker build {' '.join(args)}")
 
     def push(self, *args):
-        return self._run(["push"] + list(args))
+        return run_command(f"docker push {' '.join(args)}")
 
     def images(self, *args):
-        return self._run(["images"] + list(args))
+        return run_command(f"docker images {' '.join(args)}")
 
     def ps(self, *args):
-        return self._run(["ps"] + list(args))
+        return run_command(f"docker ps {' '.join(args)}")
 
     def stop(self, *args):
-        return self._run(["stop"] + list(args))
+        return run_command(f"docker stop {' '.join(args)}")
 
     def start(self, *args):
-        return self._run(["start"] + list(args))
+        return run_command(f"docker start {' '.join(args)}")
 
     def rm(self, *args):
-        return self._run(["rm"] + list(args))
+        return run_command(f"docker rm {' '.join(args)}")
 
     def rmi(self, *args):
-        return self._run(["rmi"] + list(args))
+        return run_command(f"docker rmi {' '.join(args)}")
 
     def exec(self, *args):
-        return self._run(["exec"] + list(args))
+        return run_command(f"docker exec {' '.join(args)}")
 
     def logs(self, *args):
-        return self._run(["logs"] + list(args))
+        return run_command(f"docker logs {' '.join(args)}")
 
     def inspect(self, *args):
-        return self._run(["inspect"] + list(args))
+        return run_command(f"docker inspect {' '.join(args)}")
 
     def info(self, *args):
-        return self._run(["info"] + list(args))
+        return run_command(f"docker info {' '.join(args)}")
 
     def version(self, *args):
-        return self._run(["version"] + list(args))
+        return run_command(f"docker version {' '.join(args)}")
 
     def login(self, *args):
-        return self._run(["login"] + list(args))
+        return run_command(f"docker login {' '.join(args)}")
 
     def logout(self, *args):
-        return self._run(["logout"] + list(args))
+        return run_command(f"docker logout {' '.join(args)}")
 
     def save(self, *args):
-        return self._run(["save"] + list(args))
+        return run_command(f"docker save {' '.join(args)}")
 
     def load(self, *args):
-        return self._run(["load"] + list(args))
+        return run_command(f"docker load {' '.join(args)}")
 
     def tag(self, *args):
-        return self._run(["tag"] + list(args))
+        return run_command(f"docker tag {' '.join(args)}")
 
     def commit(self, *args):
-        return self._run(["commit"] + list(args))
+        return run_command(f"docker commit {' '.join(args)}")
 
     def cp(self, *args):
-        return self._run(["cp"] + list(args))
+        return run_command(f"docker cp {' '.join(args)}")
 
     def stats(self, *args):
-        return self._run(["stats"] + list(args))
+        return run_command(f"docker stats {' '.join(args)}")
 
     def attach(self, *args):
-        return self._run(["attach"] + list(args))
+        return run_command(f"docker attach {' '.join(args)}")
 
     def pause(self, *args):
-        return self._run(["pause"] + list(args))
+        return run_command(f"docker pause {' '.join(args)}")
 
     def unpause(self, *args):
-        return self._run(["unpause"] + list(args))
+        return run_command(f"docker unpause {' '.join(args)}")
 
     # Grouped command namespaces
     def container(self, *args):
-        return self._run(["container"] + list(args))
+        return run_command(f"docker container {' '.join(args)}")
 
     def image(self, *args):
-        return self._run(["image"] + list(args))
+        return run_command(f"docker image {' '.join(args)}")
 
     def network(self, *args):
-        return self._run(["network"] + list(args))
+        return run_command(f"docker network {' '.join(args)}")
 
     def volume(self, *args):
-        return self._run(["volume"] + list(args))
+        return run_command(f"docker volume {' '.join(args)}")
 
     def compose(self, *args):
-        return self._run(["compose"] + list(args))
+        return run_command(f"docker compose {' '.join(args)}")
 
     def system(self, *args):
-        return self._run(["system"] + list(args))
+        return run_command(f"docker system {' '.join(args)}")
 
     def builder(self, *args):
-        return self._run(["builder"] + list(args))
+        return run_command(f"docker builder {' '.join(args)}")
 
     def context(self, *args):
-        return self._run(["context"] + list(args))
+        return run_command(f"docker context {' '.join(args)}")
 
     def buildx(self, *args):
-        return self._run(["buildx"] + list(args))
+        return run_command(f"docker buildx {' '.join(args)}")
     
     def __getattr__(self, name):
         def method(*args):
             sub = name.replace("_", "-")
-            return self._run([sub] + list(args))
+            return run_command(f"docker {sub} {' '.join(args)}")
 
         return method

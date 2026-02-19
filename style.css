@@ -1,0 +1,9 @@
+.code-box {
+        background-color: #f4f4f4;
+        border: 1px solid #ccc;    
+        border-radius: 5px;        
+        padding: 10px;             
+        font-family: monospace;    
+        white-space: pre-wrap;     
+        overflow-x: auto;          
+}
