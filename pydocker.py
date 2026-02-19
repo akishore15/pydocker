@@ -2,10 +2,7 @@ import os
 import shutil
 import sys
 import subprocess
-
-
 def run_command(cmd, capture_output=False, check=True, env=None):
-
     printable = cmd if isinstance(cmd, str) else " ".join(map(str, cmd))
     print(f"Running: {printable}")
     try:
@@ -112,7 +109,7 @@ class Docker:
     def unpause(self, *args):
         return run_command(f"docker unpause {' '.join(args)}")
 
-    # Grouped command namespaces
+   
     def container(self, *args):
         return run_command(f"docker container {' '.join(args)}")
 
@@ -144,5 +141,6 @@ class Docker:
         def method(*args):
             sub = name.replace("_", "-")
             return run_command(f"docker {sub} {' '.join(args)}")
+
 
         return method
